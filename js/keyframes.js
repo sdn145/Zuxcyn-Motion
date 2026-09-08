@@ -1,0 +1,2 @@
+$("addKeyframe").onclick=()=>{pushHistory();Zuxcyn.state.keys.push({time:Zuxcyn.state.currentTime,x:+$("posX").value||0,y:+$("posY").value||0,scale:+$("scale").value||100,rotation:+$("rotation").value||0});renderKeys();toast("Keyframe ditambahkan")};
+function renderKeys(){const row=$("keyframeRow");row.innerHTML="";Zuxcyn.state.keys.forEach(k=>{const d=document.createElement("div");d.className="key-dot";d.title=k.time.toFixed(2)+"s";d.style.left=(k.time/Math.max(Zuxcyn.state.duration,1)*900)+"px";row.appendChild(d)})}

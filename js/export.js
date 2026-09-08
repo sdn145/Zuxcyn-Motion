@@ -1,0 +1,1 @@
+$("exportBtn").onclick=()=>{const data={name:"Zuxcyn Motion",version:"1.0",project:Zuxcyn.state};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="zuxcyn-motion-project.json";a.click();URL.revokeObjectURL(a.href);toast("Project diekspor")};
