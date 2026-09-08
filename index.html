@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zuxcyn Motion</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn">☰</button>
+    <div class="brand"><span class="logo">Z</span><span>Zuxcyn <b>Motion</b></span></div>
+    <div class="top-actions">
+      <button class="ghost-btn" id="undoBtn">↶</button>
+      <button class="ghost-btn" id="redoBtn">↷</button>
+      <button class="primary-btn" id="exportBtn">Export</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="preview-panel">
+      <div class="preview-toolbar">
+        <span id="projectName">Untitled Project</span>
+        <div>
+          <button class="small-btn" id="fitBtn">Fit</button>
+          <button class="small-btn" id="fullscreenBtn">⛶</button>
+        </div>
+      </div>
+      <div class="stage-wrap">
+        <div class="stage" id="stage">
+          <video id="videoPreview" playsinline></video>
+          <div id="emptyStage">
+            <div class="big-play">▶</div>
+            <strong>Tambahkan media</strong>
+            <span>Video, gambar, atau teks</span>
+          </div>
+          <div id="textOverlay"></div>
+        </div>
+      </div>
+      <div class="transport">
+        <button id="rewindBtn">⏮</button>
+        <button class="play-btn" id="playBtn">▶</button>
+        <button id="forwardBtn">⏭</button>
+        <span class="time" id="currentTime">00:00.00</span>
+        <input type="range" id="seekBar" min="0" max="100" value="0">
+        <span class="time" id="duration">00:00.00</span>
+      </div>
+    </section>
+
+    <aside class="inspector">
+      <div class="tabs">
+        <button class="tab active" data-tab="project">Project</button>
+        <button class="tab" data-tab="effects">Effects</button>
+        <button class="tab" data-tab="text">Text</button>
+      </div>
+
+      <div class="tab-content active" id="tab-project">
+        <div class="section-title">Media</div>
+        <div class="import-grid">
+          <button class="import-card" id="importVideo">🎬<small>Video</small></button>
+          <button class="import-card" id="importImage">🖼️<small>Image</small></button>
+          <button class="import-card" id="importAudio">🎵<small>Audio</small></button>
+          <button class="import-card" id="addText">T<small>Text</small></button>
+        </div>
+        <div class="section-title">Transform</div>
+        <div class="control-grid">
+          <label>X <input id="posX" type="number" value="0"></label>
+          <label>Y <input id="posY" type="number" value="0"></label>
+          <label>Scale <input id="scale" type="number" value="100" min="1" max="500"></label>
+          <label>Rotation <input id="rotation" type="number" value="0"></label>
+          <label>Opacity <input id="opacity" type="number" value="100" min="0" max="100"></label>
+        </div>
+        <button class="wide-btn" id="addKeyframe">◆ Add Keyframe</button>
+      </div>
+
+      <div class="tab-content" id="tab-effects">
+        <div class="section-title">Effects</div>
+        <div class="effect-list">
+          <button class="effect-card" data-effect="blur"><span>◌</span><b>Blur</b><small>Soft blur</small></button>
+          <button class="effect-card" data-effect="brightness"><span>☀</span><b>Brightness</b><small>Light control</small></button>
+          <button class="effect-card" data-effect="contrast"><span>◐</span><b>Contrast</b><small>Dynamic contrast</small></button>
+          <button class="effect-card" data-effect="grayscale"><span>◑</span><b>Grayscale</b><small>Black & white</small></button>
+          <button class="effect-card" data-effect="sepia"><span>◒</span><b>Sepia</b><small>Vintage look</small></button>
+          <button class="effect-card" data-effect="saturate"><span>✦</span><b>Saturate</b><small>Color boost</small></button>
+          <button class="effect-card" data-effect="hue"><span>🌈</span><b>Hue Rotate</b><small>Color shift</small></button>
+          <button class="effect-card" data-effect="shadow"><span>◆</span><b>Glow</b><small>Neon shadow</small></button>
+        </div>
+        <button class="wide-btn danger" id="clearEffects">Reset Effects</button>
+      </div>
+
+      <div class="tab-content" id="tab-text">
+        <div class="section-title">Text Layer</div>
+        <textarea id="textInput" rows="4" placeholder="Ketik teks...">Zuxcyn Motion</textarea>
+        <div class="control-grid">
+          <label>Size <input id="textSize" type="number" value="42"></label>
+          <label>Weight <select id="textWeight"><option>400</option><option selected>700</option><option>900</option></select></label>
+        </div>
+        <button class="wide-btn" id="applyText">Apply Text</button>
+      </div>
+    </aside>
+  </main>
+
+  <section class="timeline-panel">
+    <div class="timeline-header">
+      <strong>Timeline</strong>
+      <span id="fpsLabel">30 FPS</span>
+      <button class="small-btn" id="addLayer">＋ Layer</button>
+    </div>
+    <div class="timeline">
+      <div class="ruler" id="ruler"></div>
+      <div class="tracks" id="tracks">
+        <div class="track"><div class="track-name">🎬 Media</div><div class="clip media-clip" id="mediaClip">Media</div></div>
+        <div class="track"><div class="track-name">✨ Effects</div><div class="clip effects-clip">Effects</div></div>
+        <div class="track"><div class="track-name">🔑 Keyframes</div><div class="keyframe-row" id="keyframeRow"></div></div>
+      </div>
+      <div class="playhead" id="playhead"></div>
+    </div>
+  </section>
+
+  <input type="file" id="videoInput" accept="video/*" hidden>
+  <input type="file" id="imageInput" accept="image/*" hidden>
+  <input type="file" id="audioInput" accept="audio/*" hidden>
+</div>
+<div class="toast" id="toast"></div>
+<script src="js/app.js"></script>
+<script src="js/player.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/layers.js"></script>
+<script src="js/keyframes.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/export.js"></script>
+</body>
+</html>
